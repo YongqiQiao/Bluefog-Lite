@@ -62,22 +62,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Conda
-      uses: conda-incubator/setup-miniconda@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
-        add-pip-as-python-dependency: true
-        channels: conda-forge, defaults
-        auto-update-conda: true
-        show-channel-urls: true
     - name: Install BlueFogLite
       run: |
-        conda info -e
-        python --version
         python -m pip install --upgrade pip
         python -m pip install -r requirements.txt
-        python -m pip install .
-        cat tools/requirements_dev.txt | grep pytest | xargs python -m pip install
+        python -m pip install -e .
+        cat tools/requirements_dev.txt | grep pytest | xargs pip install
     - name: Unit Test
       run: |
         timeout 3m pytest -s -vv bluefoglite test
@@ -92,25 +86,18 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Conda
-      uses: conda-incubator/setup-miniconda@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
-        add-pip-as-python-dependency: true
-        channels: conda-forge, defaults
-        auto-update-conda: true
-        show-channel-urls: true
-
     - name: Install brew coreutils
       run: brew install coreutils  # for timeout command
     - name: Install BlueFogLite
       run: |
-        conda info -e
-        python --version
         python -m pip install --upgrade pip
         python -m pip install -r requirements.txt
-        python -m pip install .
-        cat tools/requirements_dev.txt | grep pytest | xargs python -m pip install
+        python -m pip install -e .
+        cat tools/requirements_dev.txt | grep pytest | xargs pip install
     - name: Unit Test
       run: |
         timeout 3m pytest -s -vv bluefoglite test
