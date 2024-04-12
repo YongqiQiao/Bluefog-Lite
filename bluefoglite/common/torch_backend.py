@@ -12,15 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-
-import dataclasses
-from collections.abc import Iterable
 import functools
-from enum import Enum
 import os
+from collections.abc import Iterable
+from enum import Enum
 from typing import Any, Dict, List, Tuple, Optional, Union, Callable
 
+import dataclasses
 import networkx as nx
+
 import torch
 import torch.distributed as dist
 
@@ -53,7 +53,7 @@ class AsyncWork:
         self,
         work: Union[dist.Work, List[dist.Work]],
         post_func: Optional[Callable] = None,
-    ):
+    ) -> None:
         self._work = work
         self._post_func = post_func
 
@@ -77,7 +77,7 @@ class BlueFogLiteGroup:
         self._backend: Optional[str] = None
 
     @property
-    def process_group(self):
+    def process_group(self) -> Optional[dist.ProcessGroup]:
         if not self._process_group:
             raise RuntimeError("Initialize the Bluefoglite first.")
         return self._process_group
@@ -85,13 +85,16 @@ class BlueFogLiteGroup:
     def is_initialized(self) -> bool:
         return self._process_group is not None
 
-    def init_from_process_group(self, process_group: dist.ProcessGroup):
+    def init_from_process_group(self, process_group: dist.ProcessGroup) -> None:
         assert isinstance(process_group, dist.ProcessGroup)
         self._process_group = process_group
 
     def init(
-        self, backend="gloo", rank: Optional[int] = None, size: Optional[int] = None
-    ):
+        self,
+        backend: str = "gloo",
+        rank: Optional[int] = None,
+        size: Optional[int] = None,
+    ) -> None:
         if not dist.is_available():
             raise EnvironmentError(
                 "Please install torch with distributed package support."
@@ -118,7 +121,7 @@ class BlueFogLiteGroup:
         self._rank = dist.get_rank()
         self._size = dist.get_world_size()
 
-    def shutdown(self):
+    def shutdown(self) -> None:
         if self._process_group is not None:
             dist.destroy_process_group(self._process_group)
             self._process_group = None
@@ -133,8 +136,8 @@ class BlueFogLiteGroup:
             raise RuntimeError("Bluefoglite must call init() function first.")
         return self._size
 
-    def _check_rank(self, rank):
-        error_msg = "dst or src must be an interger between 0 and size-1."
+    def _check_rank(self, rank: int) -> None:
+        error_msg = "dst or src must be an integer between 0 and size-1."
         assert isinstance(rank, int), error_msg
         assert rank >= 0, error_msg
         assert rank < self.size(), error_msg
@@ -143,16 +146,16 @@ class BlueFogLiteGroup:
         """A function that sets the virtual topology MPI used.
 
         Args:
-          Topo: A networkx.DiGraph object to decide the topology.
+          topology: A networkx.DiGraph object to decide the topology.
 
         Returns:
             A boolean value that whether topology is set correctly or not.
         """
         if not isinstance(topology, nx.DiGraph):
-            raise TypeError("topology must be a networkx.DiGraph obejct.")
+            raise TypeError("topology must be a networkx.DiGraph object.")
         if topology.number_of_nodes() != self.size():
             raise TypeError(
-                "topology must be a networkx.DiGraph obejct with same number of "
+                "topology must be a networkx.DiGraph object with the same number of "
                 "nodes as bfl.size()."
             )
         _default_self_weight, _default_src_weights = GetRecvWeights(
@@ -169,16 +172,19 @@ class BlueFogLiteGroup:
         )
         return True
 
-    def load_topology(self, group=None):
+    def load_topology(self, group: Optional[Any] = None) -> nx.DiGraph:
+        assert self._topology_and_weights is not None
         return self._topology_and_weights.topology
 
     def isend(self, tensor: torch.Tensor, dst: int, tag: int = 0) -> AsyncWork:
         self._check_rank(dst)
-        return AsyncWork(work=self.process_group.send([tensor], dstRank=dst, tag=tag))
+        assert self._process_group is not None
+        return AsyncWork(work=self._process_group.send([tensor], dstRank=dst, tag=tag))
 
     def irecv(self, tensor: torch.Tensor, src: int, tag: int = 0) -> AsyncWork:
         self._check_rank(src)
-        return AsyncWork(work=self.process_group.recv([tensor], srcRank=src, tag=tag))
+        assert self._process_group is not None
+        return AsyncWork(work=self._process_group.recv([tensor], srcRank=src, tag=tag))
 
     def send(self, tensor: torch.Tensor, dst: int, tag: int = 0) -> None:
         self.isend(tensor=tensor, dst=dst, tag=tag).wait()
@@ -226,7 +232,7 @@ class BlueFogLiteGroup:
                         else tensor.mul(weight)
                     ),
                     peer=dst,
-                    group=self.process_group,
+                    group=self._process_group,
                 )
             )
         src_weights_items = list(src_weights.items())
@@ -245,7 +251,7 @@ class BlueFogLiteGroup:
                     dist.irecv,
                     tmp_recv_tensors_concat[idx],
                     peer=src,
-                    group=self.process_group,
+                    group=self._process_group,
                 )
             )
 
@@ -309,8 +315,9 @@ class BlueFogLiteGroup:
         def post_func(tensor: torch.Tensor) -> torch.Tensor:
             return tensor
 
+        assert self._process_group is not None
         return AsyncWork(
-            self.process_group.broadcast([_tensor], opts),
+            self._process_group.broadcast([_tensor], opts),
             functools.partial(post_func, tensor=_tensor),
         )
 
@@ -334,8 +341,9 @@ class BlueFogLiteGroup:
         def post_func(tensor: torch.Tensor, op: ReduceOp, size: int) -> torch.Tensor:
             return tensor.mul_(1 / size) if op == ReduceOp.AVG else tensor
 
+        assert self._process_group is not None
         return AsyncWork(
-            self.process_group.allreduce([_tensor], opts),
+            self._process_group.allreduce([_tensor], opts),
             functools.partial(post_func, tensor=_tensor, op=op, size=self.size()),
         )
 

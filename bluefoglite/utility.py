@@ -1,4 +1,5 @@
 import collections
+from typing import Any, Dict, List, Tuple, Union, Callable
 import torch
 import bluefoglite.torch_api as bfl
 from bluefoglite.common.optimizers import (
@@ -7,7 +8,9 @@ from bluefoglite.common.optimizers import (
 )
 
 
-def broadcast_parameters(params, root_rank):
+def broadcast_parameters(
+    params: Union[Dict[str, Any], List[Tuple[str, Any]]], root_rank: int
+) -> None:
     """
     Broadcasts the parameters from root rank to all other processes.
     Typical usage is to broadcast the ``model.state_dict()``,
@@ -40,7 +43,9 @@ def broadcast_parameters(params, root_rank):
 
 
 # TODO[ccy]: only broadcast named_parameters version
-def neighbor_allreduce_parameters(params):
+def neighbor_allreduce_parameters(
+    params: Union[Dict[str, Any], List[Tuple[str, Any]]]
+) -> None:
     if isinstance(params, dict):
         params = sorted(params.items())
     elif isinstance(params, list):
@@ -62,7 +67,9 @@ def neighbor_allreduce_parameters(params):
 
 
 # pylint: disable=too-many-locals, disable=too-many-branches
-def broadcast_optimizer_state(optimizer, root_rank, device):
+def broadcast_optimizer_state(
+    optimizer: torch.optim.Optimizer, root_rank: int, device: str
+) -> None:
     if isinstance(optimizer, torch.optim.LBFGS):
         raise ValueError("cannot broadcast torch.optim.LBFGS state")
 
@@ -83,7 +90,7 @@ def broadcast_optimizer_state(optimizer, root_rank, device):
             DistributedAdaptWithCombineOptimizer.__module__,
             DistributedGradientAllreduceOptimizer.__module__,
         ):
-            super(optimizer.__class__, optimizer).step()
+            super(optimizer.__class__, optimizer).step()  # type: ignore
         else:
             optimizer.step()
         state_dict = optimizer.state_dict()
@@ -95,18 +102,20 @@ def broadcast_optimizer_state(optimizer, root_rank, device):
     if not state_dict["state"]:
         return
 
-    params = []
-    callbacks = {}
-    occurrences = collections.defaultdict(int)
+    params: List[Tuple[str, torch.Tensor]] = []
+    callbacks: Dict[str, Callable[[], None]] = {}
+    occurrences: Dict[str, int] = {}
 
     # Returns the full type structure of the possibly nested objects for recursive casting back
-    def _get_types(x):
+    def _get_types(x: Any) -> Union[type, Tuple[type, List[Any]]]:
         if isinstance(x, collections.Iterable):
             return type(x), [_get_types(xi) for xi in x]
         return type(x)
 
     # Casts an object encoded in a tensor back into its original type and subtypes
-    def _recursive_cast(x, dtype):
+    def _recursive_cast(
+        x: torch.Tensor, dtype: Union[type, Tuple[type, List[Any]]]
+    ) -> Any:
         if isinstance(dtype, tuple):
             t, dtypes = dtype
             x = t(x)
@@ -117,16 +126,23 @@ def broadcast_optimizer_state(optimizer, root_rank, device):
     # tensors.  In such cases, we need to wrap the scalar in a tensor, then
     # broadcast, then update the appropriate value in the state_dict with the
     # new unwrapped scalar value via a callback.
-    def _create_callback(pid, name, t, p):
-        def _from_tensor():
+    def _create_callback(
+        pid: int, name: str, t: type, p: torch.Tensor
+    ) -> Callable[[], None]:
+        def _from_tensor() -> None:
             state_dict["state"][pid][name] = (
                 t(p.cpu().numpy()[0]) if device != "cpu" else t(p.numpy()[0])
             )
 
         return _from_tensor
 
-    def _create_option_callback(index, option_key, option_tensor, dtypes):
-        def _from_tensor():
+    def _create_option_callback(
+        index: int,
+        option_key: str,
+        option_tensor: torch.Tensor,
+        dtypes: Union[type, Tuple[type, List[Any]]],
+    ) -> Callable[[], None]:
+        def _from_tensor() -> None:
             optimizer.param_groups[index][option_key] = _recursive_cast(
                 option_tensor.cpu().numpy()[0]
                 if device != "cpu"

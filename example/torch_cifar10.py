@@ -186,7 +186,7 @@ optimizer = torch.optim.SGD(
 )
 if args.dist_optimizer == "allreduce":
     optimizer = DistributedAdaptWithCombineOptimizer(
-        optimizer, model=model, communication_type=bfl.CommunicationType.allreduce
+        optimizer, model=model, communication_type=CommunicationType.allreduce
     )
 elif args.dist_optimizer == "neighbor_allreduce":
     optimizer = DistributedAdaptWithCombineOptimizer(

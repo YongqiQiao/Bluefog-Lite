@@ -46,13 +46,13 @@ __all__ = [
 # import basic methods and wrap it with default global group.
 
 
-def init(backend: str = "gloo", *, group=None):
+def init(backend: str = "gloo", *, group=None) -> None:
     if group is None:
         group = _global_group
     group.init(backend=backend)
 
 
-def shutdown(group=None):
+def shutdown(group=None) -> None:
     if group is None:
         group = _global_group
     group.shutdown()
@@ -70,37 +70,37 @@ def rank(group=None) -> int:
     return group.rank()
 
 
-def send(tensor, dst, *, tag: int = 0, group=None) -> None:
+def send(tensor: torch.Tensor, dst: int, *, tag: int = 0, group=None) -> None:
     if group is None:
         group = _global_group
     group.send(tensor=tensor, dst=dst, tag=tag)
 
 
-def recv(tensor, src, *, tag: int = 0, group=None) -> None:
+def recv(tensor: torch.Tensor, src: int, *, tag: int = 0, group=None) -> None:
     if group is None:
         group = _global_group
     group.recv(tensor=tensor, src=src, tag=tag)
 
 
-def isend(tensor, dst, *, tag: int = 0, group=None) -> dist.Work:
+def isend(tensor: torch.Tensor, dst: int, *, tag: int = 0, group=None) -> dist.Work:
     if group is None:
         group = _global_group
     return group.send(tensor=tensor, dst=dst, tag=tag)
 
 
-def irecv(tensor, src, *, tag: int = 0, group=None) -> dist.Work:
+def irecv(tensor: torch.Tensor, src: int, *, tag: int = 0, group=None) -> dist.Work:
     if group is None:
         group = _global_group
     return group.recv(tensor=tensor, src=src, tag=tag)
 
 
-def set_topology(topology: nx.DiGraph, *, group=None):
+def set_topology(topology: nx.DiGraph, *, group=None) -> None:
     if group is None:
         group = _global_group
     return group.set_topology(topology=topology)
 
 
-def load_topology(group=None):
+def load_topology(group=None) -> nx.DiGraph:
     if group is None:
         group = _global_group
     return group.load_topology(group=None)
