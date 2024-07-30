@@ -195,6 +195,118 @@ class BlueFogLiteGroup:
     def wait(self, work: AsyncWork) -> Any:
         return work.wait()
 
+    def neighbor_allgather_nonblocking(
+        self,
+        tensor_buffer: torch.Tensor,
+        tensor: torch.Tensor,
+        *,
+        self_weight: Optional[float],
+        src_weights: Optional[Dict[int, float]],
+        dst_weights: Optional[Dict[int, float]],
+        inplace: bool = False,
+    ) -> AsyncWork:
+        # TODO 1. add topology check service.
+        if (
+            self_weight is None
+            and src_weights is None
+            and dst_weights is None
+            and (self._topology_and_weights is not None)
+        ):
+            self_weight = self._topology_and_weights.default_self_weight
+            src_weights = self._topology_and_weights.default_src_weights
+            dst_weights = self._topology_and_weights.default_dst_weights
+
+        if self_weight is None or src_weights is None or dst_weights is None:
+            raise ValueError(
+                "Must provide all self_weight, src_weights, and dst_weights "
+                "arguments or set static topology."
+            )
+
+        op_list = []
+        for dst, weight in dst_weights.items():
+            op_list.append(
+                dist.P2POp(
+                    dist.isend,
+                    (
+                        tensor.to("cpu")
+                        if self._backend == "gloo" and tensor.device.type != "cpu"
+                        else tensor
+                    ),
+                    peer=dst,
+                    group=self._process_group,
+                )
+            )
+        src_weights_items = list(src_weights.items())
+        tmp_recv_tensors_concat = torch.zeros(
+            len(src_weights_items),
+            *tensor.shape,
+            device=(
+                "cpu"
+                if self._backend == "gloo" and tensor.device.type != "cpu"
+                else tensor.device
+            ),
+        )
+        for idx, (src, _) in enumerate(src_weights_items):
+            op_list.append(
+                dist.P2POp(
+                    dist.irecv,
+                    tmp_recv_tensors_concat[idx],
+                    peer=src,
+                    group=self._process_group,
+                )
+            )
+
+        reqs = dist.batch_isend_irecv(op_list)
+
+        def post_func(
+            tensor_buffer: torch.Tensor,
+            tensor: torch.Tensor,
+            tmp_recv_tensors_concat: torch.Tensor,
+            self_weight: float,
+            src_weights_items: List[Tuple[int, float]],
+        ) -> torch.Tensor:
+            tensor_ = tensor if inplace else tensor.detach().clone()
+            # tensor_.mul_(self_weight)
+            # move tmp_recv_tensors_concat from cpu to cuda.
+            if self._backend == "gloo" and tensor.device.type != "cpu":
+                tmp_recv_tensors_concat = tmp_recv_tensors_concat.to(tensor_.device)
+            for idx, (_, weight) in enumerate(src_weights_items):
+                tensor_buffer[idx] = tmp_recv_tensors_concat[idx]
+                # tensor_.add_(tmp_recv_tensors_concat[idx], alpha=weight)
+            del tmp_recv_tensors_concat
+            return tensor_buffer
+
+        return AsyncWork(
+            reqs,
+            functools.partial(
+                post_func,
+                tensor_buffer=tensor_buffer,
+                tensor=tensor,
+                tmp_recv_tensors_concat=tmp_recv_tensors_concat,
+                self_weight=self_weight,
+                src_weights_items=src_weights_items,
+            ),
+        )
+
+    def neighbor_allgather(
+        self,
+        tensor_buffer: torch.Tensor,
+        tensor: torch.Tensor,
+        *,
+        self_weight: Optional[float],
+        src_weights: Optional[Dict[int, float]],
+        dst_weights: Optional[Dict[int, float]],
+        inplace: bool = False,
+    ) -> Optional[torch.Tensor]:
+        return self.neighbor_allgather_nonblocking(
+            tensor_buffer=tensor_buffer,
+            tensor=tensor,
+            self_weight=self_weight,
+            src_weights=src_weights,
+            dst_weights=dst_weights,
+            inplace=inplace,
+        ).wait()
+    
     def neighbor_allreduce_nonblocking(
         self,
         tensor: torch.Tensor,

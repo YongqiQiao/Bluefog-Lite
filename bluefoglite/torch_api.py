@@ -145,6 +145,48 @@ def neighbor_allreduce_nonblocking(
         inplace=inplace,
     )
 
+def neighbor_allgather(
+    tensor_buffer: torch.Tensor,
+    tensor: torch.Tensor,
+    *,
+    self_weight: Optional[float] = None,
+    src_weights: Optional[Dict[int, float]] = None,
+    dst_weights: Optional[Dict[int, float]] = None,
+    inplace: bool = False,
+    group=None,
+) -> torch.Tensor:
+    if group is None:
+        group = _global_group
+    return group.neighbor_allgather(
+        tensor_buffer=tensor_buffer,
+        tensor=tensor,
+        self_weight=self_weight,
+        src_weights=src_weights,
+        dst_weights=dst_weights,
+        inplace=inplace,
+    )
+
+
+def neighbor_allgather_nonblocking(
+    tensor_buffer: torch.Tensor,
+    tensor: torch.Tensor,
+    *,
+    self_weight: Optional[float] = None,
+    src_weights: Optional[Dict[int, float]] = None,
+    dst_weights: Optional[Dict[int, float]] = None,
+    inplace: bool = False,
+    group=None,
+) -> AsyncWork:
+    if group is None:
+        group = _global_group
+    return group.neighbor_allgather_nonblocking(
+        tensor_buffer=tensor_buffer,
+        tensor=tensor,
+        self_weight=self_weight,
+        src_weights=src_weights,
+        dst_weights=dst_weights,
+        inplace=inplace,
+    )
 
 def broadcast(
     tensor: torch.Tensor, root_rank: int, *, inplace: bool = False, group=None

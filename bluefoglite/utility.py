@@ -1,4 +1,5 @@
 import collections
+collections.Iterable = collections.abc.Iterable
 from typing import Any, Dict, List, Tuple, Union, Callable
 import torch
 import bluefoglite.torch_api as bfl
@@ -182,7 +183,10 @@ def broadcast_optimizer_state(
                 # TODO: what if option_value is None or bool?
                 if p is None or isinstance(p, bool):
                     continue
-                occurrences[name] += 1
+                if name in occurrences.keys():
+                    occurrences[name] += 1
+                else :
+                    occurrences[name] = 1
                 key = f"{str(name)}.{occurrences[name]}"
 
                 if not torch.is_tensor(p):

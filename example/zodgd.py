@@ -5,6 +5,8 @@ from torchvision import datasets, transforms
 import torch.utils.data.distributed
 import torch.nn.functional as F
 
+from torchvision.models import resnet18,resnet34,resnet50,resnet101,resnet152
+
 import bluefoglite.torch_api as bfl
 from bluefoglite.common import topology
 from bluefoglite.utility import (
@@ -16,11 +18,10 @@ from bluefoglite.common.optimizers import (
     DistributedGradientAllreduceOptimizer,
     CommunicationType,
 )
-from model import ResNet20, ResNet32, ResNet44, ResNet56, ViT
 
 # Args
 parser = argparse.ArgumentParser(
-    description="Bluefog-Lite Example on MNIST",
+    description="Bluefog-Lite Example on Decentralized Zero-Order",
     formatter_class=argparse.ArgumentDefaultsHelpFormatter,
 )
 parser.add_argument("--model", type=str, default="resnet20", help="model to use")
@@ -109,7 +110,7 @@ if not args.disable_dynamic_topology:
     dynamic_neighbor_allreduce_gen = topology.GetDynamicOnePeerSendRecvRanks(
         bfl.load_topology(), bfl.rank()
     )
-
+    
 # Device
 if args.cuda:
     print("using cuda.")
@@ -121,65 +122,56 @@ else:
     print("using cpu")
     torch.manual_seed(args.seed)
     device = "cpu"
-
+    
 # Dataloader
 kwargs = {}
 data_folder_loc = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
-transform_train = transforms.Compose(
-    [
-        transforms.RandomCrop(32, padding=4),
-        transforms.RandomHorizontalFlip(),
-        transforms.ToTensor(),
-        transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
-    ]
-)
-transform_test = transforms.Compose(
-    [
-        transforms.ToTensor(),
-        transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
-    ]
-)
-train_dataset = datasets.CIFAR10(
-    root="./data", train=True, download=True, transform=transform_train
+
+train_dataset = datasets.MNIST(
+    os.path.join(data_folder_loc, "data", "data-%d" % bfl.rank()),
+    train=True,
+    download=True,
+    transform=transforms.Compose(
+        [transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))]
+    ),
 )
 train_sampler = torch.utils.data.distributed.DistributedSampler(
-    train_dataset, num_replicas=bfl.size(), rank=bfl.rank(), seed=args.seed
+    train_dataset, num_replicas=bfl.size(), rank=bfl.rank()
 )
 train_loader = torch.utils.data.DataLoader(
-    train_dataset,
-    batch_size=args.batch_size,
-    sampler=train_sampler,
-    **kwargs,
+    train_dataset, batch_size=args.batch_size, sampler=train_sampler, **kwargs
 )
-test_dataset = datasets.CIFAR10(
-    root="./data", train=False, download=True, transform=transform_test
+
+test_dataset = datasets.MNIST(
+    os.path.join(data_folder_loc, "data", "data-%d" % bfl.rank()),
+    train=False,
+    transform=transforms.Compose(
+        [transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))]
+    ),
 )
 test_sampler = torch.utils.data.distributed.DistributedSampler(
-    test_dataset, num_replicas=bfl.size(), rank=bfl.rank(), seed=args.seed
+    test_dataset, num_replicas=bfl.size(), rank=bfl.rank()
 )
 test_loader = torch.utils.data.DataLoader(
-    test_dataset,
-    batch_size=args.test_batch_size,
-    sampler=test_sampler,
-    **kwargs,
+    test_dataset, batch_size=args.test_batch_size, sampler=test_sampler, **kwargs
 )
 
 # model
-if args.model == "resnet20":
-    model = ResNet20()
-elif args.model == "resnet32":
-    model = ResNet32()
-elif args.model == "resnet44":
-    model = ResNet44()
-elif args.model == "resnet56":
-    model = ResNet56()
-elif args.model == "vit_tiny":
-    model = ViT()
+if args.model == 'resnet18':
+    model = resnet18()
+elif args.model == 'resnet34':
+    model = resnet34()
+elif args.model == 'resnet50':
+    model = resnet50()
+elif args.model == 'resnet101':
+    model = resnet101()
+elif args.model == 'resnet152':
+    model = resnet152()
 else:
     raise NotImplementedError("model not implemented")
 if args.cuda:
     model.cuda()
-
+    
 # Optimizer & Scheduler
 optimizer = torch.optim.SGD(
     model.parameters(), lr=args.lr, momentum=args.momentum, weight_decay=5e-4
@@ -205,8 +197,7 @@ else:
         + "[neighbor_allreduce, gradient_allreduce, allreduce, "
         + "hierarchical_neighbor_allreduce, win_put, horovod]"
     )
-scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=args.epochs)
-
+    
 # Broadcast parameters & optimizer state
 broadcast_parameters(model.state_dict(), root_rank=0)
 broadcast_optimizer_state(
@@ -233,7 +224,6 @@ def metric_average(val):
     tensor = torch.tensor(val, device=device)
     avg_tensor = bfl.allreduce(tensor)
     return avg_tensor.item()
-
 
 def train(epoch):
     model.train()
@@ -348,8 +338,6 @@ else:
     for e in range(args.epochs):
         train(e)
         test(e)
-        scheduler.step()
 
 bfl.barrier(device=device)
 print(f"rank {bfl.rank()} finished.")
-
