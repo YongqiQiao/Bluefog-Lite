@@ -1,5 +1,4 @@
 import argparse
-import json
 import os
 import time
 from torchvision import datasets, transforms
@@ -69,7 +68,7 @@ parser.add_argument(
 parser.add_argument(
     "--profiling",
     type=str,
-    default="c_profiling",
+    default="no_profiling",
     metavar="S",
     help="enable which profiling? default: no",
     choices=["no_profiling", "c_profiling", "torch_profiling"],
@@ -182,8 +181,6 @@ neighbor_models = {}
 
 losses = []
 accuracies = []
-epoch_time = []
-
 for idx in range(neighbor_size):
     neighbor_models[idx] = deepcopy(named_parameters_to_optim)
 grad_buffer = [torch.zeros(num_perturb) for _ in range(neighbor_size)]
@@ -214,17 +211,15 @@ def zo_step(inputs, targets,epoch):
         # Sample the random seed for sampling z
         # zo_random_seed = np.random.randint(1000000000)
         zo_random_seed = (epoch+1)*(i+1)
+        loss = zo_forward(inputs, targets)
         # First function evaluation
         zo_perturb_parameters(scaling_factor=1, random_seed=zo_random_seed)
         loss1 = zo_forward(inputs, targets)
 
-        # Second function evaluation
-        zo_perturb_parameters(scaling_factor=-2, random_seed=zo_random_seed)
-        loss2 = zo_forward(inputs, targets)
-
-        projected_grad = ((loss1 - loss2) / (2 * zo_eps)).item()
+        projected_grad = ((loss1-loss) / (zo_eps)).item()
         projected_grad_list[i] = projected_grad
-        zo_perturb_parameters(scaling_factor=1, random_seed=zo_random_seed)
+        # huanyuan
+        zo_perturb_parameters(scaling_factor=-1, random_seed=zo_random_seed)
     return loss1
 
 def zo_update(epoch):
@@ -288,15 +283,19 @@ def train(epoch):
         data, targets = data.cuda(), targets.cuda()
         loss = zo_step(data, targets, epoch)
         grad_tensor = torch.tensor(projected_grad_list, device=device)
+        # print("rank:",bfl.rank(),"grad_tensor:",grad_tensor)
         grad_tensor = bfl.neighbor_allreduce(grad_tensor)
+        # print("rank:",bfl.rank(),"avg_grad_tensor:",grad_tensor)
         zo_update(epoch)
         bfl.neighbor_allgather(grad_buffer, grad_tensor)
+        # print("rank:",bfl.rank(),"grad_buffer:",grad_buffer)
         zo_update_neighbor_models(epoch)
         train_loss += loss.item()
         outputs = model(data)
         _, pred = outputs.max(dim=1)
         total += targets.size(dim=0)
         correct += pred.eq(targets).sum().item()
+
         if (batch_idx + 1) % 100 == 0:
             print(
                 "Train Epoch: {} Loss: {:.6f}\t".format(
@@ -342,60 +341,16 @@ def test(epoch):
             ),
             flush=True,
         )
-if args.profiling == "c_profiling":
-    if bfl.rank() == 0:
-        import cProfile
-        import pstats
 
-        profiler = cProfile.Profile()
-        profiler.enable()
-        for e in range(args.epochs):
-            start=time.time()
-            train(e)
-            end=time.time()
-            epoch_time.append(end-start)
-            test(e)
-        profiler.disable()
-        # redirect to ./output_static.txt or ./output_dynamic.txt
-        with open(
-            f"/home/qyq/bfl/results/cp_{'static' if args.disable_dynamic_topology else 'dynamic'}_np{bfl.size()}_{args.topology}.txt",
-            "w",
-        ) as file:
-            stats = pstats.Stats(profiler, stream=file).sort_stats("tottime")
-            stats.print_stats()
-    else:
-        for e in range(args.epochs):
-            train(e)
-            test(e)
-elif args.profiling == "torch_profiling":
-    from torch.profiler import profile, ProfilerActivity
-    import contextlib
+start = time.time()
+for e in range(epochs):
+    
+    train(e)
+    test(e)
+end = time.time()
+print("time of training is {}.epoch:".format(end-start,epochs))
 
-    assert args.backend != "nccl", "NCCL backend does not support torch_profiling."
-
-    if bfl.rank() == 0:
-        with profile(
-            activities=[ProfilerActivity.CUDA, ProfilerActivity.CPU], record_shapes=True
-        ) as prof:
-            train(0)
-        # redirect to ./output_static.txt or ./output_dynamic.txt
-        with open(
-            f"output/tp_{'static' if args.disable_dynamic_topology else 'dynamic'}_np{bfl.size()}_{args.topology}.txt",
-            "w",
-        ) as file:
-            with contextlib.redirect_stdout(file):
-                print(prof.key_averages().table(sort_by="cpu_time_total"))
-    else:
-        train(0)
-else:
-    for e in range(args.epochs):
-        start=time.time()
-        train(e)
-        end=time.time()
-        epoch_time.append(end-start)
-        test(e)
-
- 
+    
 bfl.barrier(device=device)
 if bfl.rank()==0:
     f=open("/home/qyq/bfl/results/{}_loss.txt".format(args.experiment_name),'w')
@@ -405,9 +360,5 @@ if bfl.rank()==0:
     f=open("/home/qyq/bfl/results/{}_accuracy.txt".format(args.experiment_name),'w')
     for accuracy in accuracies:
         f.write(str(accuracy)+'\n')
-    f.close()
-    f=open("/home/qyq/bfl/results/{}_epoch_time.txt".format(args.experiment_name),'w')
-    for et in epoch_time:
-        f.write(str(et)+'\n')
     f.close()
 print(f"rank {bfl.rank()} finished.")

@@ -1,0 +1,352 @@
+         225814160 function calls (225218092 primitive calls) in 393.444 seconds
+
+   Ordered by: internal time
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+  1750000   32.417    0.000   91.256    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torchvision/transforms/_functional_tensor.py:903(normalize)
+  1750000   22.593    0.000  332.574    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torchvision/datasets/mnist.py:131(__getitem__)
+  1750000   19.972    0.000  138.189    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torchvision/transforms/functional.py:127(to_tensor)
+  3500000   18.718    0.000   18.718    0.000 {built-in method torch.as_tensor}
+  1750000   17.543    0.000   17.543    0.000 {method 'div' of 'torch._C.TensorBase' objects}
+  5263800   14.833    0.000   14.833    0.000 {method 'view' of 'torch._C.TensorBase' objects}
+  1750000   12.644    0.000   12.644    0.000 {method 'to' of 'torch._C.TensorBase' objects}
+  1750000   12.417    0.000   49.535    0.000 {built-in method numpy.array}
+    11800   11.636    0.001   11.636    0.001 {method 'run_backward' of 'torch._C._EngineBase' objects}
+  1750000   10.662    0.000   39.428    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/PIL/Image.py:3219(fromarray)
+  1750000    9.619    0.000   27.298    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/PIL/Image.py:772(tobytes)
+  1750000    8.848    0.000    8.848    0.000 {method 'any' of 'torch._C.TensorBase' objects}
+  1750000    7.938    0.000    7.938    0.000 {method 'numpy' of 'torch._C.TensorBase' objects}
+  1750400    7.779    0.000    7.779    0.000 {method 'clone' of 'torch._C.TensorBase' objects}
+  1750000    7.662    0.000  107.345    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torchvision/transforms/functional.py:327(normalize)
+  3500000    7.029    0.000   11.960    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torchvision/utils.py:612(_log_api_usage_once)
+  1750000    6.774    0.000    6.774    0.000 {method 'permute' of 'torch._C.TensorBase' objects}
+  1750000    6.661    0.000    6.661    0.000 {method 'sub_' of 'torch._C.TensorBase' objects}
+  3500000    5.499    0.000    8.336    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/PIL/Image.py:571(_new)
+  1750000    5.414    0.000    5.414    0.000 {method 'div_' of 'torch._C.TensorBase' objects}
+  1750000    4.775    0.000    6.753    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/PIL/Image.py:449(_getencoder)
+  1750000    4.727    0.000   28.072    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/PIL/Image.py:3151(frombuffer)
+  1750000    4.722    0.000    4.722    0.000 {built-in method torch.from_numpy}
+  1750000    4.261    0.000  142.451    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torchvision/transforms/transforms.py:129(__call__)
+  1750000    4.206    0.000  262.616    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torchvision/transforms/transforms.py:93(__call__)
+  1750000    3.971    0.000   14.802    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/PIL/Image.py:3053(new)
+  5250000    3.915    0.000    3.915    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/PIL/Image.py:543(__init__)
+  1750000    3.835    0.000    3.835    0.000 {method 'encode' of 'ImagingEncoder' objects}
+  1750000    3.781    0.000   37.118    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/PIL/Image.py:732(__array_interface__)
+22494036/22492036    3.713    0.000    3.907    0.000 {built-in method builtins.isinstance}
+1888000/1763800    3.637    0.000  139.063    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/nn/modules/module.py:1534(_call_impl)
+  1750000    3.505    0.000    5.767    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/PIL/Image.py:254(_conv_type_shape)
+  3500000    3.235    0.000    3.235    0.000 {built-in method torch._C._log_api_usage_once}
+  3500000    3.038    0.000    4.020    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/PIL/Image.py:3034(_check_size)
+  3500000    2.689    0.000    4.915    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/jit/_trace.py:1133(is_tracing)
+   141600    2.636    0.000    3.304    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:1772(isend)
+   141600    2.528    0.000    2.528    0.000 {method 'mul' of 'torch._C.TensorBase' objects}
+  1750000    2.509    0.000    2.509    0.000 {built-in method PIL._imaging.fill}
+  1750000    2.436    0.000    2.436    0.000 {built-in method PIL._imaging.map_buffer}
+    27600    2.411    0.000    2.411    0.000 {built-in method torch.conv2d}
+1888000/1763800    2.393    0.000  141.319    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/nn/modules/module.py:1528(_wrapped_call_impl)
+  1750000    2.283    0.000    5.417    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torchvision/transforms/_functional_pil.py:41(get_image_num_channels)
+    70800    2.191    0.000   16.508    0.000 /home/qyq/bfl/bluefoglite/common/torch_backend.py:310(neighbor_allreduce_nonblocking)
+      200    2.117    0.011    2.117    0.011 {built-in method torch.randperm}
+   141600    1.907    0.000    2.093    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:1955(_coalescing_manager)
+  3500000    1.783    0.000    1.783    0.000 {built-in method torch._C._is_tracing}
+  3500000    1.777    0.000    2.205    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torchvision/transforms/_functional_pil.py:14(_is_pil_image)
+   141600    1.729    0.000    2.368    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:1811(irecv)
+14108702/14107902    1.719    0.000    1.723    0.000 {built-in method builtins.len}
+ 12250000    1.693    0.000    1.693    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/PIL/Image.py:567(mode)
+  1888200    1.683    0.000    1.683    0.000 {built-in method torch._C._get_tracing_state}
+  1750000    1.544    0.000  108.889    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torchvision/transforms/transforms.py:269(forward)
+    27600    1.518    0.000    1.518    0.000 {method 'cuda' of 'torch._C.TensorBase' objects}
+  3500000    1.494    0.000    1.925    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/PIL/Image.py:555(width)
+ 12250000    1.493    0.000    1.493    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/PIL/Image.py:563(size)
+  3500000    1.392    0.000    1.820    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/PIL/Image.py:559(height)
+  1750000    1.381    0.000    1.922    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/PIL/Image.py:885(load)
+    13800    1.365    0.000  333.940    0.024 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/data/_utils/fetch.py:51(<listcomp>)
+  3547216    1.275    0.000    1.275    0.000 {method 'startswith' of 'str' objects}
+  1750000    1.148    0.000    1.148    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torchvision/transforms/_functional_tensor.py:9(_is_tensor_a_torch_image)
+  1750000    1.147    0.000    1.352    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/PIL/Image.py:1387(getbands)
+    70800    1.139    0.000    1.139    0.000 {built-in method torch.zeros}
+   141600    1.112    0.000    1.112    0.000 {method 'add_' of 'torch._C.TensorBase' objects}
+  1750000    1.070    0.000    1.070    0.000 {built-in method PIL._imaging.raw_encoder}
+    71200    1.024    0.000    1.024    0.000 {method 'mul_' of 'torch._C.TensorBase' objects}
+  7132000    1.015    0.000    1.015    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_jit_internal.py:1120(is_scripting)
+    13800    1.010    0.000    1.010    0.000 {built-in method torch.stack}
+  1750000    0.939    0.000    0.939    0.000 {method 'is_floating_point' of 'torch._C.TensorBase' objects}
+  1750000    0.878    0.000    0.878    0.000 {method 'contiguous' of 'torch._C.TensorBase' objects}
+  1750000    0.877    0.000    2.025    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torchvision/transforms/_functional_tensor.py:13(_assert_image_tensor)
+  1750000    0.876    0.000    1.117    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torchvision/transforms/functional.py:117(_is_numpy)
+    70800    0.826    0.000    2.954    0.000 /home/qyq/bfl/bluefoglite/common/torch_backend.py:372(post_func)
+  1750000    0.822    0.000    0.822    0.000 {built-in method builtins.max}
+    49400    0.746    0.000    0.746    0.000 {built-in method torch._ops.profiler._record_function_enter_new}
+  3683004    0.734    0.000    0.734    0.000 {method 'get' of 'dict' objects}
+    70800    0.731    0.000    9.498    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:2044(batch_isend_irecv)
+  1750000    0.702    0.000    0.702    0.000 {built-in method torch.get_default_dtype}
+  1750000    0.698    0.000    0.698    0.000 {method 'setimage' of 'ImagingEncoder' objects}
+  1950600    0.693    0.000    0.693    0.000 {built-in method builtins.getattr}
+    28200    0.675    0.000    0.675    0.000 {method 'item' of 'torch._C.TensorBase' objects}
+    13800    0.656    0.000    0.656    0.000 {built-in method torch._C._nn.cross_entropy_loss}
+    11800    0.645    0.000    0.645    0.000 {built-in method torch._foreach_add}
+    14000    0.634    0.000  340.307    0.024 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/data/dataloader.py:673(_next_data)
+      100    0.616    0.006  343.498    3.435 /home/qyq/bfl/example/torch_cifar10.py:231(train)
+  3500000    0.588    0.000    0.588    0.000 {method 'copy' of 'dict' objects}
+    13800    0.588    0.000    0.588    0.000 {built-in method torch._C._nn.linear}
+    70800    0.545    0.000   17.053    0.000 /home/qyq/bfl/bluefoglite/torch_api.py:129(neighbor_allreduce_nonblocking)
+  1750000    0.541    0.000    0.541    0.000 {method 'pixel_access' of 'ImagingCore' objects}
+    27600    0.517    0.000    0.517    0.000 {built-in method torch.max_pool2d}
+414000/110400    0.509    0.000    0.981    0.000 /home/qyq/bfl/bluefoglite/common/optimizers.py:32(_named_leaf_module)
+    71200    0.509    0.000    3.573    0.000 /home/qyq/bfl/bluefoglite/common/torch_backend.py:60(wait)
+    27600    0.501    0.000    0.501    0.000 {built-in method torch.relu}
+  2399200    0.499    0.000    0.499    0.000 {method 'append' of 'list' objects}
+  1836800    0.493    0.000    0.493    0.000 {built-in method builtins.hasattr}
+    13800    0.475    0.000   19.689    0.001 /home/qyq/bfl/bluefoglite/common/optimizers.py:135(hook)
+    13800    0.448    0.000    0.448    0.000 {method 'max' of 'torch._C.TensorBase' objects}
+    14200    0.431    0.000    0.431    0.000 {built-in method torch.tensor}
+    13800    0.426    0.000    0.426    0.000 {method 'sum' of 'torch._C.TensorBase' objects}
+   528200    0.407    0.000    0.476    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/nn/modules/module.py:2322(named_children)
+   167200    0.400    0.000    1.260    0.000 {built-in method builtins.all}
+      200    0.388    0.002    0.388    0.002 {method 'tolist' of 'torch._C.TensorBase' objects}
+  1750000    0.375    0.000    0.490    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/data/_utils/collate.py:168(<genexpr>)
+  1750000    0.372    0.000    0.372    0.000 {method 'join' of 'bytes' objects}
+    14000    0.352    0.000    2.946    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/data/sampler.py:274(__iter__)
+   179400    0.337    0.000    0.696    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/nn/modules/module.py:2193(_named_members)
+   992400    0.310    0.000    0.446    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:588(WORLD)
+   283200    0.305    0.000    0.644    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:404(__new__)
+    23600    0.294    0.000    0.294    0.000 {built-in method torch._foreach_add_}
+41400/13800    0.292    0.000    2.686    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/data/_utils/collate.py:108(collate)
+    49400    0.288    0.000    0.288    0.000 {built-in method torch._ops.profiler.}
+   283600    0.279    0.000    0.685    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:1005(_get_default_group)
+23600/11800    0.273    0.000    7.802    0.001 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/optim/optimizer.py:374(wrapper)
+    11800    0.271    0.000    0.701    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/optim/optimizer.py:793(zero_grad)
+   566400    0.268    0.000    0.336    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:860(_check_single_tensor)
+    49400    0.250    0.000    0.603    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/autograd/profiler.py:610(__exit__)
+    70800    0.231    0.000   17.284    0.000 /home/qyq/bfl/bluefoglite/common/optimizers.py:163(_neighbor_allreduce_data_async)
+    11800    0.224    0.000    0.300    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/optim/sgd.py:45(_init_group)
+    11800    0.214    0.000    0.214    0.000 {method 'clear' of 'dict' objects}
+   191000    0.209    0.000    0.299    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/typing.py:306(inner)
+    11800    0.201    0.000    0.201    0.000 {built-in method torch.ones_like}
+    11800    0.199    0.000    1.699    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/optim/sgd.py:296(_multi_tensor_sgd)
+    13800    0.197    0.000    0.197    0.000 {method 'eq' of 'torch._C.TensorBase' objects}
+    27600    0.173    0.000    4.361    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/nn/modules/container.py:215(forward)
+   179400    0.171    0.000    0.867    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/nn/modules/module.py:2232(named_parameters)
+    11800    0.171    0.000    1.157    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_dynamo/eval_frame.py:351(__call__)
+    11800    0.161    0.000    0.161    0.000 {built-in method torch._foreach_mul_}
+    82600    0.158    0.000    0.158    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/optim/optimizer.py:122(<genexpr>)
+   283200    0.155    0.000    0.155    0.000 {method 'is_complex' of 'torch._C.TensorBase' objects}
+   193200    0.147    0.000    0.176    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/nn/modules/module.py:2369(named_modules)
+   283200    0.145    0.000    0.145    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:395(__init__)
+    70800    0.143    0.000    0.526    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:914(_check_p2p_op_list)
+    13800    0.141    0.000    5.472    0.000 /home/qyq/bfl/model/cnn.py:46(forward)
+   992400    0.136    0.000    0.136    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:460(default_pg)
+    11800    0.131    0.000    0.131    0.000 {built-in method torch._C._group_tensors_by_device_and_dtype}
+    49400    0.128    0.000    0.932    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/autograd/profiler.py:604(__enter__)
+   378000    0.126    0.000    0.195    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_tensor.py:1059(__hash__)
+    70800    0.124    0.000    0.146    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/contextlib.py:102(__init__)
+    49400    0.122    0.000    0.191    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/autograd/profiler.py:593(__init__)
+    14000    0.117    0.000  340.989    0.024 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626(__next__)
+   354000    0.114    0.000    0.136    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:920(<genexpr>)
+   283800    0.113    0.000    0.235    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:973(is_initialized)
+    11800    0.112    0.000    4.059    0.000 /home/qyq/bfl/bluefoglite/common/optimizers.py:186(synchronize)
+      100    0.109    0.001   49.956    0.500 /home/qyq/bfl/example/torch_cifar10.py:276(test)
+    70800    0.109    0.000    1.843    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/contextlib.py:139(__exit__)
+   169400    0.108    0.000    5.147    0.000 {built-in method builtins.next}
+   124200    0.108    0.000    0.108    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/nn/modules/module.py:1696(__getattr__)
+    11800    0.104    0.000    0.104    0.000 {built-in method posix.stat}
+    11800    0.104    0.000    2.469    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/optim/sgd.py:60(step)
+   283200    0.102    0.000    0.102    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:904(_check_op)
+    11800    0.097    0.000    2.625    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/optim/optimizer.py:58(_use_grad)
+   283600    0.094    0.000    0.094    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:752(_rank_not_in_group)
+      200    0.085    0.000    2.594    0.013 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/data/distributed.py:96(__iter__)
+    13800    0.084    0.000    1.098    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/data/_utils/collate.py:194(collate_tensor_fn)
+    27600    0.084    0.000    2.575    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/nn/modules/conv.py:459(forward)
+   429600    0.082    0.000    0.113    0.000 {method 'add' of 'set' objects}
+    70800    0.081    0.000    0.153    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/autograd/grad_mode.py:183(__init__)
+    11800    0.080    0.000    7.278    0.001 /home/qyq/bfl/bluefoglite/common/optimizers.py:214(step)
+   354000    0.076    0.000    0.076    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:929(<genexpr>)
+    23600    0.075    0.000    0.160    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/inspect.py:773(getfile)
+    11800    0.073    0.000    0.289    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/autograd/__init__.py:60(_make_grads)
+    11800    0.073    0.000    0.401    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/inspect.py:813(getsourcefile)
+   389800    0.072    0.000    0.072    0.000 {built-in method builtins.id}
+    11800    0.072    0.000   12.095    0.001 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/autograd/__init__.py:165(backward)
+    11800    0.071    0.000    0.442    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_dynamo/trace_rules.py:3342(check_verbose)
+   306801    0.070    0.000    0.070    0.000 {built-in method __new__ of type object at 0x744500}
+    99400    0.070    0.000    0.101    0.000 {built-in method _abc._abc_instancecheck}
+    70800    0.068    0.000    0.091    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/typing.py:1037(__hash__)
+    70800    0.067    0.000    0.517    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/contextlib.py:130(__enter__)
+   498800    0.067    0.000    0.067    0.000 {method 'items' of 'collections.OrderedDict' objects}
+    11800    0.067    0.000    2.236    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_compile.py:20(inner)
+    11800    0.065    0.000    2.026    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/optim/sgd.py:194(sgd)
+    11800    0.064    0.000    0.090    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_dynamo/eval_frame.py:290(__init__)
+    70800    0.063    0.000    0.209    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/contextlib.py:279(helper)
+   283600    0.061    0.000    0.061    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/_typing_utils.py:10(not_none)
+    96600    0.061    0.000    0.073    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/nn/modules/module.py:2260(<lambda>)
+    27600    0.059    0.000    0.671    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/nn/modules/pooling.py:163(forward)
+    49400    0.058    0.000    0.805    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_ops.py:846(__call__)
+    11800    0.057    0.000   12.157    0.001 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_tensor.py:466(backward)
+    11800    0.057    0.000    0.092    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/functools.py:35(update_wrapper)
+    70800    0.054    0.000    0.071    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:1946(append)
+    70800    0.053    0.000    0.053    0.000 {built-in method torch._C._set_grad_enabled}
+    27600    0.051    0.000    0.613    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_jit_internal.py:487(fn)
+    11800    0.051    0.000    0.829    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_dynamo/eval_frame.py:428(_fn)
+    27600    0.050    0.000    2.461    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/nn/modules/conv.py:451(_conv_forward)
+    11800    0.049    0.000   11.701    0.001 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/autograd/graph.py:739(_engine_run_backward)
+    13800    0.048    0.000    0.722    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/nn/functional.py:2996(cross_entropy)
+    23600    0.048    0.000    0.053    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/autograd/grad_mode.py:74(__init__)
+    13800    0.044    0.000  336.704    0.024 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/data/_utils/fetch.py:46(fetch)
+    11800    0.044    0.000    7.847    0.001 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/optim/lr_scheduler.py:70(wrapper)
+    11800    0.044    0.000    1.340    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_dynamo/decorators.py:36(disable)
+    13800    0.043    0.000    0.643    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/nn/modules/linear.py:115(forward)
+    27600    0.042    0.000    0.042    0.000 {method 'size' of 'torch._C.TensorBase' objects}
+    23600    0.042    0.000    0.108    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/autograd/grad_mode.py:79(__enter__)
+    11800    0.041    0.000    0.194    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_dynamo/trace_rules.py:3432(lookup_inner)
+    99400    0.041    0.000    0.141    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/abc.py:117(__instancecheck__)
+    11800    0.040    0.000    0.104    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_dynamo/trace_rules.py:3275(check_file)
+    27600    0.040    0.000    0.553    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/nn/functional.py:1489(relu)
+    49400    0.040    0.000    0.328    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_ops.py:591(__call__)
+    35400    0.039    0.000    0.136    0.000 {built-in method builtins.any}
+    82600    0.039    0.000    0.039    0.000 {method 'setdefault' of 'dict' objects}
+    35400    0.038    0.000    0.050    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_dynamo/variables/base.py:127(__instancecheck__)
+    11800    0.038    0.000    0.255    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/optim/optimizer.py:109(_default_to_fused_or_foreach)
+    27600    0.036    0.000    0.589    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/nn/modules/activation.py:102(forward)
+   106200    0.036    0.000    0.036    0.000 {built-in method torch.is_grad_enabled}
+    27600    0.035    0.000    0.561    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/nn/functional.py:774(_max_pool2d)
+    23600    0.034    0.000    0.042    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/_contextlib.py:149(__new__)
+    71200    0.034    0.000    0.034    0.000 /home/qyq/bfl/bluefoglite/common/torch_backend.py:52(__init__)
+    13800    0.034    0.000    1.603    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/data/_utils/collate.py:173(<listcomp>)
+    11800    0.034    0.000    0.044    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_dynamo/eval_frame.py:141(change)
+    11800    0.033    0.000    0.123    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_dynamo/eval_frame.py:550(__init__)
+    27600    0.033    0.000    0.050    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/nn/modules/container.py:207(__iter__)
+      400    0.033    0.000    0.041    0.000 /home/qyq/bfl/bluefoglite/common/torch_backend.py:443(allreduce_nonblocking)
+   165200    0.031    0.000    0.031    0.000 {method 'items' of 'dict' objects}
+    11800    0.031    0.000    0.341    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/_contextlib.py:112(decorate_context)
+    11800    0.029    0.000    0.032    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_dynamo/trace_rules.py:2840(is_aten_op_or_tensor_method)
+    23600    0.029    0.000    0.202    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/package/package_importer.py:694(_patched_getfile)
+    13800    0.029    0.000    2.715    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/data/_utils/collate.py:255(default_collate)
+    70800    0.028    0.000    0.028    0.000 {method 'pop' of 'dict' objects}
+    59000    0.028    0.000    0.044    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_dynamo/trace_rules.py:3279(<genexpr>)
+   141600    0.028    0.000    0.028    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:543(pg_coalesce_state)
+    70800    0.028    0.000    0.028    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:1943(__init__)
+    11800    0.027    0.000    0.183    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/_foreach_utils.py:30(_group_tensors_by_device_and_dtype)
+    23600    0.026    0.000    0.076    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/autograd/grad_mode.py:83(__exit__)
+    82600    0.026    0.000    0.026    0.000 {built-in method builtins.hash}
+    67200    0.026    0.000    0.026    0.000 {built-in method torch._C._has_torch_function_unary}
+   122000    0.024    0.000    0.024    0.000 {method 'values' of 'collections.OrderedDict' objects}
+    35400    0.020    0.000    0.032    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/inspect.py:820(<genexpr>)
+    59008    0.020    0.000    0.020    0.000 {method 'endswith' of 'str' objects}
+13836/13802    0.020    0.000    0.025    0.000 {built-in method _abc._abc_subclasscheck}
+    35400    0.019    0.000    0.026    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_dynamo/eval_frame.py:265(innermost_fn)
+    11800    0.018    0.000    0.384    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/optim/optimizer.py:402(_group_tensors_by_device_and_dtype)
+    11800    0.018    0.000    0.122    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/genericpath.py:16(exists)
+    11800    0.017    0.000    0.056    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/_contextlib.py:141(clone)
+    47200    0.017    0.000    0.025    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/inspect.py:823(<genexpr>)
+    11800    0.017    0.000    0.023    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/_foreach_utils.py:35(<dictcomp>)
+    47200    0.016    0.000    0.021    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/inspect.py:191(isclass)
+    49400    0.016    0.000    0.016    0.000 {method '__exit__' of 'torch._C.DisableTorchFunctionSubclass' objects}
+    11800    0.016    0.000    0.016    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/logging/__init__.py:1710(getEffectiveLevel)
+    13800    0.015    0.000    0.431    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/data/_utils/collate.py:233(collate_int_fn)
+    23600    0.015    0.000    0.015    0.000 {built-in method torch._C._get_privateuse1_backend_name}
+    11800    0.015    0.000    0.025    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_utils.py:851(is_compiling)
+    11800    0.014    0.000    0.021    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_dynamo/eval_frame.py:119(backend_cache_manager)
+    11800    0.014    0.000    0.014    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/functools.py:65(wraps)
+    59000    0.014    0.000    0.014    0.000 {built-in method builtins.setattr}
+    23600    0.013    0.000    0.016    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/inspect.py:182(ismodule)
+    11800    0.013    0.000    0.454    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_dynamo/trace_rules.py:3377(check)
+    23600    0.013    0.000    0.016    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/inspect.py:355(istraceback)
+    49400    0.012    0.000    0.012    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/jit/__init__.py:127(annotate)
+    41800    0.012    0.000    0.012    0.000 {built-in method builtins.iter}
+    11800    0.012    0.000    0.012    0.000 {built-in method torch._C._are_functorch_transforms_active}
+    11800    0.012    0.000    0.091    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_dynamo/utils.py:862(getfile)
+    72800    0.012    0.000    0.012    0.000 {function _ParameterMeta.__instancecheck__ at 0x7f319e50c8b0}
+    11800    0.012    0.000    0.056    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_dynamo/eval_frame.py:448(<listcomp>)
+    23600    0.011    0.000    0.011    0.000 <string>:2(__init__)
+    11800    0.011    0.000    0.022    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/_foreach_utils.py:12(_get_fused_kernels_supported_devices)
+    23600    0.010    0.000    0.010    0.000 {built-in method torch._C._dynamo.eval_frame.set_eval_frame}
+    13800    0.010    0.000    0.010    0.000 {built-in method torch._C._has_torch_function_variadic}
+    14000    0.010    0.000    2.969    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/data/dataloader.py:620(_next_index)
+    23600    0.009    0.000    0.011    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/inspect.py:379(iscode)
+    23600    0.009    0.000    0.012    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/inspect.py:365(isframe)
+    11800    0.009    0.000    0.009    0.000 {method 'numel' of 'torch._C.TensorBase' objects}
+    23600    0.009    0.000    0.011    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/inspect.py:277(isfunction)
+    11800    0.009    0.000    0.009    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/autograd/__init__.py:155(_tensor_or_tensors_to_tuple)
+    23600    0.009    0.000    0.011    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/inspect.py:199(ismethod)
+    11800    0.008    0.000    0.010    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/compiler/__init__.py:157(is_compiling)
+    11800    0.008    0.000    0.012    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_dynamo/utils.py:435(hashable)
+    11800    0.008    0.000    0.008    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_dynamo/eval_frame.py:149(revert)
+    13800    0.008    0.000    0.008    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/nn/_reduction.py:7(get_enum)
+    23600    0.006    0.000    0.006    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_dynamo/decorators.py:148(graph_break)
+     2000    0.006    0.000    0.012    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/nn/modules/module.py:1711(__setattr__)
+    35401    0.006    0.000    0.006    0.000 {built-in method builtins.callable}
+      300    0.006    0.000    0.006    0.000 {built-in method builtins.print}
+    11800    0.006    0.000    0.009    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/_foreach_utils.py:8(_get_foreach_kernels_supported_devices)
+    23600    0.006    0.000    0.006    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/typing.py:1737(cast)
+13836/13802    0.006    0.000    0.031    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/abc.py:121(__subclasscheck__)
+ 2000/200    0.005    0.000    0.023    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/nn/modules/module.py:2411(train)
+    13800    0.005    0.000    0.005    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/_collections_abc.py:315(__subclasshook__)
+    23600    0.004    0.000    0.004    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/optim/optimizer.py:358(_optimizer_step_code)
+    23600    0.004    0.000    0.004    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_dynamo/eval_frame.py:261(always_false)
+    11800    0.004    0.000    0.004    0.000 {method 'update' of 'dict' objects}
+      200    0.004    0.000    0.015    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/data/dataloader.py:565(__init__)
+    13800    0.004    0.000    0.004    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/data/_utils/worker.py:89(get_worker_info)
+    11800    0.003    0.000    0.003    0.000 {method 'values' of 'dict' objects}
+      400    0.003    0.000    0.056    0.000 /home/qyq/bfl/bluefoglite/common/torch_backend.py:462(allreduce)
+    11800    0.002    0.000    0.002    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_dynamo/eval_frame.py:257(nothing)
+     2000    0.002    0.000    0.003    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/nn/parameter.py:8(__instancecheck__)
+      200    0.002    0.000    0.002    0.000 {method 'random_' of 'torch._C.TensorBase' objects}
+     3800    0.002    0.000    0.006    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/nn/modules/module.py:2313(children)
+      200    0.002    0.000    0.002    0.000 {built-in method torch.empty}
+      400    0.002    0.000    0.002    0.000 {method 'detach' of 'torch._C.TensorBase' objects}
+      300    0.002    0.000    0.002    0.000 {method 'format' of 'str' objects}
+      400    0.002    0.000    0.086    0.000 /home/qyq/bfl/example/torch_cifar10.py:225(metric_average)
+      200    0.001    0.000    0.006    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/data/dataloader.py:93(_get_distributed_settings)
+      200    0.001    0.000    0.018    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/data/dataloader.py:659(__init__)
+      200    0.001    0.000    0.002    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/_tensor.py:1021(__len__)
+      400    0.001    0.000    0.057    0.000 /home/qyq/bfl/bluefoglite/torch_api.py:209(allreduce)
+      200    0.001    0.000    0.002    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:838(_get_group_size)
+      200    0.001    0.000    0.001    0.000 {method 'manual_seed' of 'torch._C.Generator' objects}
+      300    0.001    0.000    0.003    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/data/dataloader.py:457(__len__)
+      400    0.001    0.000    0.008    0.000 /home/qyq/bfl/bluefoglite/common/torch_backend.py:453(post_func)
+      200    0.001    0.000    0.001    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/data/dataloader.py:74(create_fetcher)
+      300    0.001    0.000    0.001    0.000 /home/qyq/bfl/bluefoglite/torch_api.py:67(rank)
+      200    0.001    0.000    0.019    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/data/dataloader.py:382(_get_iterator)
+      200    0.001    0.000    0.020    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/data/dataloader.py:426(__iter__)
+      200    0.001    0.000    0.001    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:1726(get_rank)
+      300    0.000    0.000    0.001    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/data/sampler.py:297(__len__)
+      500    0.000    0.000    0.001    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/data/dataloader.py:445(_index_sampler)
+      200    0.000    0.000    0.002    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torchvision/datasets/mnist.py:153(__len__)
+      200    0.000    0.000    0.002    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:1753(get_world_size)
+      200    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/data/_utils/fetch.py:8(__init__)
+      700    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/data/dataloader.py:441(_auto_collation)
+      400    0.000    0.000    0.000    0.000 /home/qyq/bfl/bluefoglite/common/torch_backend.py:134(size)
+      500    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/utils/data/distributed.py:123(__len__)
+      200    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/distributed/__init__.py:9(is_available)
+      300    0.000    0.000    0.000    0.000 /home/qyq/bfl/bluefoglite/common/torch_backend.py:129(rank)
+      100    0.000    0.000    0.012    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/torch/nn/modules/module.py:2433(eval)
+      200    0.000    0.000    0.000    0.000 {method 'dim' of 'torch._C.TensorBase' objects}
+        1    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/PIL/ImageMode.py:37(getmode)
+       16    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/typing.py:986(__setattr__)
+        2    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/typing_extensions.py:2989(_collect_type_vars)
+        3    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/typing.py:146(_type_check)
+        2    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/typing.py:1016(__init__)
+        2    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/typing_extensions.py:2954(_has_generic_or_protocol_as_origin)
+        1    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/typing.py:1223(__getitem__)
+        1    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/typing.py:1138(__getitem__)
+       16    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/typing.py:935(_is_dunder)
+        2    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/typing.py:1147(copy_with)
+       35    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/_collections_abc.py:409(__subclasshook__)
+        1    0.000    0.000    0.000    0.000 <string>:1(<lambda>)
+        3    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/typing.py:1234(<genexpr>)
+        1    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/_collections_abc.py:78(_check_methods)
+        3    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/typing.py:1902(get_origin)
+        2    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/typing.py:947(__init__)
+        3    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/typing_extensions.py:154(_should_collect_from_parameters)
+        3    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/typing_extensions.py:2976(_is_unpacked_typevartuple)
+        1    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/_collections_abc.py:262(__subclasshook__)
+        6    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/typing.py:1031(__eq__)
+        1    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/typing_extensions.py:2872(_check_generic)
+        5    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/typing.py:1022(<genexpr>)
+        3    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/typing.py:137(_type_convert)
+        2    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/typing.py:1143(<genexpr>)
+        2    0.000    0.000    0.000    0.000 {built-in method sys._getframe}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        1    0.000    0.000    0.000    0.000 /home/qyq/anaconda3/envs/bfl/lib/python3.10/site-packages/typing_extensions.py:3024(<listcomp>)
+        1    0.000    0.000    0.000    0.000 {method 'extend' of 'list' objects}
+
+

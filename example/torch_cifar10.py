@@ -16,21 +16,21 @@ from bluefoglite.common.optimizers import (
     DistributedGradientAllreduceOptimizer,
     CommunicationType,
 )
-from model import ResNet20, ResNet32, ResNet44, ResNet56, ViT
+from model import ResNet20, ResNet32, ResNet44, ResNet56, ViT, CNN_MNIST
 
 # Args
 parser = argparse.ArgumentParser(
     description="Bluefog-Lite Example on MNIST",
     formatter_class=argparse.ArgumentDefaultsHelpFormatter,
 )
-parser.add_argument("--model", type=str, default="resnet20", help="model to use")
+parser.add_argument("--model", type=str, default="cnn", help="model to use")
 parser.add_argument(
-    "--batch-size", type=int, default=64, help="input batch size for training"
+    "--batch-size", type=int, default=128, help="input batch size for training"
 )
 parser.add_argument(
-    "--test-batch-size", type=int, default=64, help="input batch size for testing"
+    "--test-batch-size", type=int, default=128, help="input batch size for testing"
 )
-parser.add_argument("--epochs", type=int, default=5, help="number of epochs to train")
+parser.add_argument("--epochs", type=int, default=100, help="number of epochs to train")
 parser.add_argument("--lr", type=float, default=0.01, help="learning rate")
 parser.add_argument("--momentum", type=float, default=0.9, help="momentum")
 parser.add_argument(
@@ -68,7 +68,7 @@ parser.add_argument(
 parser.add_argument(
     "--profiling",
     type=str,
-    default="no_profiling",
+    default="c_profiling",
     metavar="S",
     help="enable which profiling? default: no",
     choices=["no_profiling", "c_profiling", "torch_profiling"],
@@ -125,22 +125,11 @@ else:
 # Dataloader
 kwargs = {}
 data_folder_loc = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
-transform_train = transforms.Compose(
-    [
-        transforms.RandomCrop(32, padding=4),
-        transforms.RandomHorizontalFlip(),
-        transforms.ToTensor(),
-        transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
-    ]
-)
-transform_test = transforms.Compose(
-    [
-        transforms.ToTensor(),
-        transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
-    ]
-)
-train_dataset = datasets.CIFAR10(
-    root="./data", train=True, download=True, transform=transform_train
+transform = transforms.Compose(
+    [transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))]
+    )
+train_dataset = datasets.MNIST(
+    root="/home/qyq/bfl/data", train=True, download=True, transform=transform
 )
 train_sampler = torch.utils.data.distributed.DistributedSampler(
     train_dataset, num_replicas=bfl.size(), rank=bfl.rank(), seed=args.seed
@@ -151,8 +140,8 @@ train_loader = torch.utils.data.DataLoader(
     sampler=train_sampler,
     **kwargs,
 )
-test_dataset = datasets.CIFAR10(
-    root="./data", train=False, download=True, transform=transform_test
+test_dataset = datasets.MNIST(
+    root="/home/qyq/bfl/data", train=False, download=True, transform=transform
 )
 test_sampler = torch.utils.data.distributed.DistributedSampler(
     test_dataset, num_replicas=bfl.size(), rank=bfl.rank(), seed=args.seed
@@ -175,6 +164,8 @@ elif args.model == "resnet56":
     model = ResNet56()
 elif args.model == "vit_tiny":
     model = ViT()
+elif args.model == "cnn":
+    model = CNN_MNIST()
 else:
     raise NotImplementedError("model not implemented")
 if args.cuda:
@@ -182,7 +173,7 @@ if args.cuda:
 
 # Optimizer & Scheduler
 optimizer = torch.optim.SGD(
-    model.parameters(), lr=args.lr, momentum=args.momentum, weight_decay=5e-4
+    model.parameters(), lr=args.lr, momentum=args.momentum, weight_decay=1e-5
 )
 if args.dist_optimizer == "allreduce":
     optimizer = DistributedAdaptWithCombineOptimizer(
@@ -213,6 +204,8 @@ broadcast_optimizer_state(
     optimizer, root_rank=0, device=next(model.parameters()).device
 )
 
+losses = []
+accuracies = []
 
 def dynamic_topology_update(epoch, batch_idx):
     if args.dist_optimizer == "neighbor_allreduce":
@@ -271,6 +264,7 @@ def train(epoch):
     train_loss = metric_average(train_loss)
     train_accuracy = metric_average(train_accuracy)
     if bfl.rank() == 0:
+        losses.append(train_loss / len(train_loader))
         print(
             "\nTrain Epoch: {}\tAverage loss: {:.6f}\tAccuracy: {:.4f}%\n".format(
                 epoch, train_loss / len(train_loader), 100.0 * train_accuracy
@@ -298,6 +292,7 @@ def test(epoch):
     test_loss = metric_average(test_loss)
     test_accuracy = metric_average(test_accuracy)
     if bfl.rank() == 0:
+        accuracies.append(test_accuracy)
         print(
             "\nTest Epoch: {}\tAverage loss: {:.6f}\tAccuracy: {:.4f}%\n".format(
                 epoch, test_loss / len(test_loader), 100.0 * test_accuracy
@@ -313,17 +308,21 @@ if args.profiling == "c_profiling":
 
         profiler = cProfile.Profile()
         profiler.enable()
-        train(0)
+        for e in range(args.epochs):
+            train(e)
+            test(e)
         profiler.disable()
         # redirect to ./output_static.txt or ./output_dynamic.txt
         with open(
-            f"output/cp_{'static' if args.disable_dynamic_topology else 'dynamic'}_np{bfl.size()}_{args.topology}.txt",
+            f"/home/qyq/bfl/results/dgd_{'static' if args.disable_dynamic_topology else 'dynamic'}_np{bfl.size()}_{args.topology}.txt",
             "w",
         ) as file:
             stats = pstats.Stats(profiler, stream=file).sort_stats("tottime")
             stats.print_stats()
     else:
-        train(0)
+        for e in range(args.epochs):
+            train(e)
+            test(e)
 elif args.profiling == "torch_profiling":
     from torch.profiler import profile, ProfilerActivity
     import contextlib
@@ -349,7 +348,15 @@ else:
         train(e)
         test(e)
         scheduler.step()
-
+if bfl.rank()==0:
+    f=open("/home/qyq/bfl/results/cnn_mnist_loss_dgd.txt",'w')
+    for loss in losses:
+        f.write(str(loss)+'\n')
+    f.close()
+    f=open("/home/qyq/bfl/results/cnn_mnist_accuracy_dgd.txt",'w')
+    for accuracy in accuracies:
+        f.write(str(accuracy)+'\n')
+    f.close()
 bfl.barrier(device=device)
 print(f"rank {bfl.rank()} finished.")
 
